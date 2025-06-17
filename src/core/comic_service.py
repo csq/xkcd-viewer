@@ -2,18 +2,28 @@ import random
 
 from core.comic import Comic
 from core.api_client import APIClient
+from utils.cache import Cache
 
 class ComicService:
     def __init__(self, base_url):
         self.api_client = APIClient(base_url)
-        self.last_id = self._get_latest_id()
+        self.last_num = self._get_latest_num()
 
-    def get_comic_with_id(self, comic_id):
-        self.last_id = comic_id
-        comic_info = self.api_client.get_comic_info(comic_id)
+    def _get_from_cache(self, num):
+        return Cache().get_from_cache(num)
+
+    def get_comic_with_num(self, comic_num):
+        self.last_num = comic_num
+
+        cache = self._get_from_cache(comic_num)
+
+        if cache is not None:
+            return cache
+
+        comic_info = self.api_client.get_comic_info(comic_num)
 
         return Comic(
-            id=comic_info["num"],
+            num=comic_info["num"],
             month=comic_info["month"],
             day=comic_info["day"],
             year=comic_info["year"],
@@ -22,20 +32,25 @@ class ComicService:
             image_url=comic_info["img"]
         )
 
-    def _get_latest_id(self):
+    def _get_latest_num(self):
         comic_info = self.api_client.get_latest_comic()
         return comic_info["num"]
-    
+
     def get_random_comic(self):
-        latest_id = self._get_latest_id()
-        comic_id = random.randint(1, latest_id)
+        latest_num = self._get_latest_num()
+        comic_num = random.randint(1, latest_num)
 
-        self.last_id = comic_id
+        self.last_num = comic_num
 
-        comic_info = self.api_client.get_comic_info(comic_id)
+        cache = self._get_from_cache(self.last_num)
+
+        if cache is not None:
+            return cache
+
+        comic_info = self.api_client.get_comic_info(comic_num)
 
         return Comic(
-            id=comic_info["num"],
+            num=comic_info["num"],
             month=comic_info["month"],
             day=comic_info["day"],
             year=comic_info["year"],
@@ -45,11 +60,17 @@ class ComicService:
         )
 
     def get_first_comic(self):
-        self.last_id = 1
+        self.last_num = 1
+
+        cache = self._get_from_cache(self.last_num)
+
+        if cache is not None:
+            return cache
+
         comic_info = self.api_client.get_comic_info(1)
 
         return Comic(
-            id=comic_info["num"],
+            num=comic_info["num"],
             month=comic_info["month"],
             day=comic_info["day"],
             year=comic_info["year"],
@@ -59,11 +80,17 @@ class ComicService:
         )
     
     def get_last_comic(self):
-        self.last_id = self._get_latest_id()
+        self.last_num = self._get_latest_num()
+
+        cache = self._get_from_cache(self.last_num)
+
+        if cache is not None:
+            return cache
+
         comic_info = self.api_client.get_latest_comic()
 
         return Comic(
-            id=comic_info["num"],
+            num=comic_info["num"],
             month=comic_info["month"],
             day=comic_info["day"],
             year=comic_info["year"],
@@ -73,15 +100,20 @@ class ComicService:
         )
     
     def get_next_comic(self):
-        self.last_id = self.last_id + 1
+        self.last_num = self.last_num + 1
 
-        if self.last_id > self._get_latest_id():
-            self.last_id = self._get_latest_id()
+        if self.last_num > self._get_latest_num():
+            self.last_num = self._get_latest_num()
 
-        comic_info = self.api_client.get_comic_info(self.last_id)
+        cache = self._get_from_cache(self.last_num)
+
+        if cache is not None:
+            return cache
+
+        comic_info = self.api_client.get_comic_info(self.last_num)
 
         return Comic(
-            id=comic_info["num"],
+            num=comic_info["num"],
             month=comic_info["month"],
             day=comic_info["day"],
             year=comic_info["year"],
@@ -91,15 +123,20 @@ class ComicService:
         )
     
     def get_previous_comic(self):
-        self.last_id = self.last_id - 1
+        self.last_num = self.last_num - 1
 
-        if self.last_id < 1:
-            self.last_id = 1
+        if self.last_num < 1:
+            self.last_num = 1
 
-        comic_info = self.api_client.get_comic_info(self.last_id)
+        cache = self._get_from_cache(self.last_num)
+
+        if cache is not None:
+            return cache
+
+        comic_info = self.api_client.get_comic_info(self.last_num)
 
         return Comic(
-            id=comic_info["num"],
+            num=comic_info["num"],
             month=comic_info["month"],
             day=comic_info["day"],
             year=comic_info["year"],

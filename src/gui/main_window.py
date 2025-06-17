@@ -10,8 +10,10 @@ from utils.circular_list import CircularList
 from utils.preferences import Preferences
 from utils.cache import Cache
 from gui.scrollImage import ScrollableImage
+from core.db import DB
 
 class MainWindow:
+    __db = DB().init_db()
     __comic_service = ComicService("https://xkcd.com/")
     __preferences = Preferences()
     __cache = Cache()
@@ -125,18 +127,20 @@ class MainWindow:
         self.set_title(comic.get_title())
     
     def download_image(self, comic):
-        cached_image_path =  self.get_image_from_cache(comic_id=comic.get_id())
-
-        if cached_image_path is not None:
-            return Image.open(cached_image_path)
+        img_url = comic.get_image_url()
+        if "/home/" in img_url:
+            return Image.open(img_url)
         else:
-            response = requests.get(comic.get_image_url())
+            response = requests.get(img_url)
             image = Image.open(BytesIO(response.content))
-            self.__cache.save_to_cache(comic_id=comic.get_id(), image=image)
+            self.__cache.save_to_cache(comic_num=comic.get_num(), image=image)
         return image
     
-    def get_image_from_cache(self, comic_id):
-        return self.__cache.get_from_cache(comic_id=comic_id)
+    def get_image_from_cache(self, comic_num):
+        cache = self.__cache.get_from_cache(comic_num=comic_num)
+        if cache is None:
+            return None
+        return cache.image_url
 
     def set_image(self, image):
         self.image = ImageTk.PhotoImage(image)
@@ -213,14 +217,14 @@ class MainWindow:
         info_window.resizable(False, False)
 
         info_text = f"""
-        ID: {comic.get_id()}
+        ID: {comic.get_num()}
         Title: {comic.get_title()}
         Date: {comic.get_date()}
         """
         info_label = ttk.Label(info_window, text=info_text, foreground="black", font=("Arial", 12, "normal"), justify="left")
         info_label.pack(padx=0, pady=0, fill="both", expand=True)
 
-        explain_url = f"https://www.explainxkcd.com/wiki/index.php/{comic.get_id()}:_{comic.get_title().replace(' ', '_')}"
+        explain_url = f"https://www.explainxkcd.com/wiki/index.php/{comic.get_num()}:_{comic.get_title().replace(' ', '_')}"
         button_explain = ttk.Button(info_window, text="Explain comic", command=lambda: webbrowser.open(explain_url))
         button_explain.pack(padx=0, pady=0, fill="both")
 
@@ -239,5 +243,5 @@ class MainWindow:
         )
 
         if save_path:
-            image_path = self.get_image_from_cache(self.__current_comic.get_id())
+            image_path = self.get_image_from_cache(comic_num=self.__current_comic.get_num())
             Image.open(image_path).save(save_path)
