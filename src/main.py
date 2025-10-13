@@ -2,7 +2,7 @@ from ttkthemes import ThemedTk
 from gui.main_window import MainWindow
 from utils.preferences import Preferences
 
-if __name__ == "__main__":
+def main():
     root = ThemedTk(theme="yaru") if Preferences()._exists_preferences_file() == False else ThemedTk(theme=Preferences().get_preferences()["theme"])
     app = MainWindow(root)
 
@@ -19,3 +19,6 @@ if __name__ == "__main__":
     root.bind("<F11>", lambda event: root.attributes("-fullscreen", not root.attributes("-fullscreen")))
 
     root.mainloop()
+
+if __name__ == "__main__":
+    main()

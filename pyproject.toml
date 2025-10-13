@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xkcd-viewer"
+version = "0.1.0"
+authors = [{ name = "Carlos Quiroz" }]
+description = "A simple viewer for xkcd comic"
+readme = "README.md"
+license = "GPL-3.0"
+keywords = [
+    "xkcd-viewer",
+    "comic-reader",
+    "webcomic"
+]
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "certifi >= 2025.4.26",
+    "urllib3 == 2.4.0",
+    "ttkthemes == 3.2.2",
+    "pillow == 11.1.0",
+    "charset-normalizer == 3.4.1",
+    "idna == 3.10",
+    "requests == 2.32.3"
+]
+
+[project.urls]
+Homepage = "https://github.com/csq/xkcd-viewer"
+Documentation = "https://github.com/csq/xkcd-viewer#readme"
+Repository = "https://github.com/csq/xkcd-viewer"
+Tracker = "https://github.com/csq/xkcd-viewer/issues"
+
+[project.scripts]
+xkcd-viewer = "src.main:main"
