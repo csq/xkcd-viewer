@@ -1,6 +1,7 @@
 import requests
 import tkinter as tk
 
+from importlib import resources as importlib_resources
 from tkinter import ttk, PhotoImage, Toplevel
 from ttkthemes import ThemedTk
 from PIL import Image, ImageTk
@@ -24,7 +25,8 @@ class MainWindow:
 
         # Set the window title and icon
         master.title("XKCD Viewer")
-        master.iconphoto(False, PhotoImage(file="src/assets/xkcd.png"))
+        with importlib_resources.path("src.assets", "xkcd.png") as icon_path:
+            master.iconphoto(False, PhotoImage(file=icon_path))
 
         # Set the window size
         self.screen_width, self.screen_height = map(
@@ -77,11 +79,16 @@ class MainWindow:
         self.image_window.pack(fill=None, expand=True)
 
         # Create control buttons
-        self.first_image = PhotoImage(file="src/assets/buttons/first.png")
-        self.previous_image = PhotoImage(file="src/assets/buttons/previous.png")
-        self.random_image = PhotoImage(file="src/assets/buttons/random.png")
-        self.next_image = PhotoImage(file="src/assets/buttons/next.png")
-        self.last_image = PhotoImage(file="src/assets/buttons/last.png")
+        with importlib_resources.path("src.assets.buttons", "first.png") as icon_path:
+            self.first_image = PhotoImage(file=icon_path)
+        with importlib_resources.path("src.assets.buttons", "previous.png") as icon_path:
+            self.previous_image = PhotoImage(file=icon_path)
+        with importlib_resources.path("src.assets.buttons", "random.png") as icon_path:
+            self.random_image = PhotoImage(file=icon_path)
+        with importlib_resources.path("src.assets.buttons", "next.png") as icon_path:
+            self.next_image = PhotoImage(file=icon_path)
+        with importlib_resources.path("src.assets.buttons", "last.png") as icon_path:
+            self.last_image = PhotoImage(file=icon_path)
 
         self.btn_first = ttk.Button(control_frame, image=self.first_image, text="First", width=10, command=self.first_comic)
         self.btn_previous = ttk.Button(control_frame, image=self.previous_image, text="Previous", width=10, command=self.previous_comic)
