@@ -3,6 +3,7 @@
 </h1>
 
 <p align="center">
+  <img src="preview.png" alt="preview"><br>
   <strong>A simple viewer for xkcd comic</strong><br>
 </p>
 
@@ -16,7 +17,7 @@ xkcd-viewer is a simple Python application that allows users to browse and view 
 - **Keyboard Shortcuts**: The app supports keyboard shortcuts for common actions, such as navigating between comics.
 
 ## INSTALLATION
-You can install xkcd by following these steps:
+You can install xkcd-viewer by following these steps:
 
 * Download the repository
     ```bash
@@ -34,6 +35,23 @@ Python versions 3.10+ are supported.
 * **Urllib3**: HTTP client for making requests and handling responses.
 * **Ttkthemes**: Provides customizable themes for Tkinter's Themed Widget (ttk) library.
 * **Pillow**: Image processing library for opening, manipulating, and saving various image formats.
+
+## USAGE
+### Keyboard Shortcuts
+
+| Shortcut      | Description        |
+|---------------|--------------------|
+| **Ctrl + F**  | First comic        |
+| **Ctrl + N**  | Next comic         |
+| **Ctrl + R**  | Random comic       |
+| **Ctrl + P**  | Previous comic     |
+| **Ctrl + L**  | Last comic         |
+| **Ctrl + S**  | Save image         |
+| **Ctrl + I**  | Info comic         |
+| **Ctrl + T**  | Change theme       |
+| **F1**        | Open help          |
+| **F11**       | Fullscreen         |
+| **Ctrl + Q**  | Quit               |
 
 ## CREDITS AND LEGAL
 ### Author
