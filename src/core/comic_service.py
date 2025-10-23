@@ -10,17 +10,17 @@ class ComicService:
         self.last_num = self._get_latest_num()
 
     def _get_from_cache(self, num):
+        self.last_num = int(num)
         return Cache().get_from_cache(num)
 
     def get_comic_with_num(self, comic_num):
-        self.last_num = comic_num
-
         cache = self._get_from_cache(comic_num)
 
         if cache is not None:
             return cache
 
         comic_info = self.api_client.get_comic_info(comic_num)
+        self.last_num = comic_info["num"]
 
         return Comic(
             num=comic_info["num"],

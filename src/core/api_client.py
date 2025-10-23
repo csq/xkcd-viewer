@@ -10,8 +10,13 @@ class APIClient:
 
     def get_comic_info(self, comic_num):
         response = requests.get(f"{self.base_url}{comic_num}/info.0.json")
-        response.raise_for_status()
-        response = response.json()
+
+        try:
+            response = response.json()
+        except requests.exceptions.JSONDecodeError:
+            response = requests.get(f"{self.base_url}1969/info.0.json")
+            response = response.json()
+
         comic = Comic(
             num=response["num"],
             month=response["month"],

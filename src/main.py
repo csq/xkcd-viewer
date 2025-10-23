@@ -15,6 +15,7 @@ def main():
     root.bind("<Control-t>", lambda event: app.change_theme(root))
     root.bind("<Control-i>", lambda event: app.info_comic(comic=app.get_current_comic()))
     root.bind("<Control-s>", lambda event: app.save_image(comic=app.get_current_comic()))
+    root.bind("<Control-g>", lambda event: app.open_search())
     root.bind("<F1>", lambda event: app.open_help())
     root.bind("<F11>", lambda event: root.attributes("-fullscreen", not root.attributes("-fullscreen")))
 

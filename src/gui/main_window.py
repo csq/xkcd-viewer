@@ -186,7 +186,7 @@ class MainWindow:
     
     def open_help(self):
         help_window = Toplevel(self.master)
-        help_window.geometry("240x310")
+        help_window.geometry("240x320")
         help_window.title("Shortcuts")
         help_window.resizable(False, False)
 
@@ -200,6 +200,7 @@ class MainWindow:
         Ctrl + S: Save image
         Ctrl + I: Info comic
         Ctrl + T: Change theme
+        Ctrl + G: Search comic
 
         F1: Open help
         F11: Fullscreen
@@ -252,3 +253,30 @@ class MainWindow:
         if save_path:
             image_path = self.get_image_from_cache(comic_num=self.__current_comic.get_num())
             Image.open(image_path).save(save_path)
+
+    def open_search(self):
+        popup = Toplevel(self.master)
+        popup.geometry("130x50")
+        popup.title("Search")
+        popup.resizable(False, False)
+
+        search_frame = ttk.Frame(popup)
+        search_frame.pack(fill="both", expand=True)
+
+        search_entry = ttk.Entry(search_frame, width=30, justify="center", font=("Arial", 12, "normal"), validate="key", validatecommand=(popup.register(self.validate_search), "%P"))
+        search_entry.pack(padx=20, pady=10, fill="both", expand=True)
+
+        popup.bind('<Return>', lambda event: self.search_comic(search_entry.get(), popup))
+        popup.bind("<Escape>", lambda event: popup.destroy())
+        popup.grab_set()
+
+    def validate_search(self, P):
+        return str.isdigit(P) or P == ""
+
+    def search_comic(self, comic_num, popup):
+        comic = self.__comic_service.get_comic_with_num(comic_num)
+        self.__current_comic = comic
+        self.set_image(self.download_image(comic))
+        self.set_title(comic.get_title())
+
+        popup.destroy()
