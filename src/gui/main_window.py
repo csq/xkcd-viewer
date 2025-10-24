@@ -260,8 +260,10 @@ class MainWindow:
 
         search_entry = ttk.Entry(search_frame, width=30, justify="center", font=("Arial", 12, "normal"), validate="key", validatecommand=(popup.register(self.validate_search), "%P"))
         search_entry.pack(padx=20, pady=10, fill="both", expand=True)
+        search_entry.focus()
 
         popup.bind('<Return>', lambda event: self.search_comic(search_entry.get(), popup))
+        popup.bind('<KP_Enter>', lambda event: self.search_comic(search_entry.get(), popup))
         popup.bind("<Escape>", lambda event: popup.destroy())
         popup.grab_set()
 
