@@ -12,6 +12,7 @@ xkcd-viewer is a simple Python application that allows users to browse and view 
 
 ## FEATURES
 - **Random comic**: Users can choose to view a random comic from the xkcd archive.
+- **Search comic**: Enables users to find a specific comic by its ID.
 - **Explain comic**: Provide a link to an external website where users can read an explanation of the current comic.
 - **Save comic image**:  Users can download the current comic as an image to share.
 - **Keyboard Shortcuts**: The app supports keyboard shortcuts for common actions, such as navigating between comics.
@@ -49,6 +50,7 @@ Python versions 3.10+ are supported.
 | **Ctrl + S**  | Save image         |
 | **Ctrl + I**  | Info comic         |
 | **Ctrl + T**  | Change theme       |
+| **Ctrl + G**  | Search comic       |
 | **F1**        | Open help          |
 | **F11**       | Fullscreen         |
 | **Ctrl + Q**  | Quit               |
