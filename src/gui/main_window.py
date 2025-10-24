@@ -103,36 +103,31 @@ class MainWindow:
         self.btn_next.pack(side=tk.LEFT, expand=True, padx=10, pady=15)
         self.btn_last.pack(side=tk.LEFT, expand=True, padx=10, pady=15)
 
-    def first_comic(self):
-        comic = self.__comic_service.get_first_comic()
+    def set_comic(self, comic):
         self.__current_comic = comic
         self.set_image(self.download_image(comic))
         self.set_title(comic.get_title())
+
+    def first_comic(self):
+        comic = self.__comic_service.get_first_comic()
+        self.set_comic(comic)
 
     def previous_comic(self):
         comic = self.__comic_service.get_previous_comic()
-        self.__current_comic = comic
-        self.set_image(self.download_image(comic))
-        self.set_title(comic.get_title())
+        self.set_comic(comic)
 
     def random_comic(self):
         comic = self.__comic_service.get_random_comic()
-        self.__current_comic = comic
-        self.set_image(self.download_image(comic))
-        self.set_title(comic.get_title())
+        self.set_comic(comic)
 
     def next_comic(self):
         comic = self.__comic_service.get_next_comic()
-        self.__current_comic = comic
-        self.set_image(self.download_image(comic))
-        self.set_title(comic.get_title())
+        self.set_comic(comic)
 
     def last_comic(self):
         comic = self.__comic_service.get_last_comic()
-        self.__current_comic = comic
-        self.set_image(self.download_image(comic))
-        self.set_title(comic.get_title())
-    
+        self.set_comic(comic)
+
     def download_image(self, comic):
         img_url = comic.get_image_url()
         if "/home/" in img_url:
