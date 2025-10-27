@@ -37,4 +37,8 @@ Repository = "https://github.com/csq/xkcd-viewer"
 Tracker = "https://github.com/csq/xkcd-viewer/issues"
 
 [project.scripts]
-xkcd-viewer = "src.main:main"
+xkcd-viewer = "xkcd_viewer.main:main"
+
+[tool.setuptools.package-data]
+"xkcd_viewer.assets.buttons" = ["*.png"]
+"xkcd_viewer.assets" = ["*.png"]

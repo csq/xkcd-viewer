@@ -1,8 +1,8 @@
 import random
 
-from core.comic import Comic
-from core.api_client import APIClient
-from utils.cache import Cache
+from .comic import Comic
+from .api_client import APIClient
+from xkcd_viewer.utils.cache import Cache
 
 class ComicService:
     def __init__(self, base_url):

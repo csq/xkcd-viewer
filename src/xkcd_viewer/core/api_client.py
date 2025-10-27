@@ -1,7 +1,7 @@
 import requests
 
-from core.db import DB
-from core.comic import Comic
+from .db import DB
+from .comic import Comic
 
 class APIClient:
     def __init__(self, base_url):

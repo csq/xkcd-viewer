@@ -1,7 +1,7 @@
 import os
 
-from core.comic import Comic
-from core.db import DB
+from xkcd_viewer.core.comic import Comic
+from xkcd_viewer.core.db import DB
 
 class Cache:
     def __init__(self):

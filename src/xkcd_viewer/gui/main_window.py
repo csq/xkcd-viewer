@@ -5,13 +5,13 @@ from importlib import resources as importlib_resources
 from tkinter import ttk, PhotoImage, Toplevel
 from ttkthemes import ThemedTk
 from PIL import Image, ImageTk
-from core.comic_service import ComicService
 from io import BytesIO
-from utils.circular_list import CircularList
-from utils.preferences import Preferences
-from utils.cache import Cache
-from gui.scrollImage import ScrollableImage
-from core.db import DB
+from .scrollImage import ScrollableImage
+from xkcd_viewer.core.comic_service import ComicService
+from xkcd_viewer.utils.circular_list import CircularList
+from xkcd_viewer.utils.preferences import Preferences
+from xkcd_viewer.utils.cache import Cache
+from xkcd_viewer.core.db import DB
 
 class MainWindow:
     __db = DB().init_db()
@@ -25,7 +25,7 @@ class MainWindow:
 
         # Set the window title and icon
         master.title("XKCD Viewer")
-        with importlib_resources.path("src.assets", "xkcd.png") as icon_path:
+        with importlib_resources.path("xkcd_viewer.assets", "xkcd.png") as icon_path:
             master.iconphoto(False, PhotoImage(file=icon_path))
 
         # Set the window size
@@ -79,15 +79,15 @@ class MainWindow:
         self.image_window.pack(fill=None, expand=True)
 
         # Create control buttons
-        with importlib_resources.path("src.assets.buttons", "first.png") as icon_path:
+        with importlib_resources.path("xkcd_viewer.assets.buttons", "first.png") as icon_path:
             self.first_image = PhotoImage(file=icon_path)
-        with importlib_resources.path("src.assets.buttons", "previous.png") as icon_path:
+        with importlib_resources.path("xkcd_viewer.assets.buttons", "previous.png") as icon_path:
             self.previous_image = PhotoImage(file=icon_path)
-        with importlib_resources.path("src.assets.buttons", "random.png") as icon_path:
+        with importlib_resources.path("xkcd_viewer.assets.buttons", "random.png") as icon_path:
             self.random_image = PhotoImage(file=icon_path)
-        with importlib_resources.path("src.assets.buttons", "next.png") as icon_path:
+        with importlib_resources.path("xkcd_viewer.assets.buttons", "next.png") as icon_path:
             self.next_image = PhotoImage(file=icon_path)
-        with importlib_resources.path("src.assets.buttons", "last.png") as icon_path:
+        with importlib_resources.path("xkcd_viewer.assets.buttons", "last.png") as icon_path:
             self.last_image = PhotoImage(file=icon_path)
 
         self.btn_first = ttk.Button(control_frame, image=self.first_image, text="First", width=10, command=self.first_comic)

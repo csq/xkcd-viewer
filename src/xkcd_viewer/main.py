@@ -1,6 +1,6 @@
 from ttkthemes import ThemedTk
-from gui.main_window import MainWindow
-from utils.preferences import Preferences
+from .gui.main_window import MainWindow
+from .utils.preferences import Preferences
 
 def main():
     root = ThemedTk(theme="yaru") if Preferences()._exists_preferences_file() == False else ThemedTk(theme=Preferences().get_preferences()["theme"])
